@@ -8,13 +8,12 @@ html {
 h1 {
     color:rgb(6, 11, 72);
     text-align: center;
-    font-size: 50px;
+    font-size: 52px;
 }
 body {
     display: table-cell;
     vertical-align: middle;
-    background-color: rgb(51, 135, 214);
-    background-image: url('0G2A2997.avif');
+    background-image: url('calculatorbackground.avif');
     background-position-x: center;
     background-position-y:-170px;
 }
