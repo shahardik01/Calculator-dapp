@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+		<link rel="stylesheet" href="cali.css" type="text/css">
+        <title>
+            CALCULATOR DAPP
+        </title>
+		<link rel="icon" type="image/x-icon" href="calci.png">
+    </head>
+    <body>
+		<h1> Calculator Dapp</h1>
+		<div class="inpu">
+        <label for="fname">First number:</label>
+        <input type="number" id="a">
+        <label for="fname">Second number:</label>
+        <input type="number" id="b">
+	</div>
+	<div class="funfun">
+        <button id="add" onclick="add()">ADDITION</button>
+         <button id="sub" onclick="sub()">SUBTRACTION</button>
+        <button id="multi" onclick="multi()">MULTIPLICATION</button>
+        <button id="div" onclick="div()">DIVISION</button>
+	</div>
+	<br>
+	<div >
+        <button class="res" id="demo" onclick="getResult()"><span>Result</span></button>
+	</div>	
+    <!--    <input class="result" id="add" type="button" value="ADDITION" onclick="add(); getResult();"/>
+        <input class="result" id="sub" type="button" value="SUBTRACTION" onclick="sub(); getResult();"/>
+        <input class="result" id="multi" type="button" value="MULTIPLICATION" onclick="multi(); getResult();"/>
+        <input class="result" id="div" type="button" value="DIVISION" onclick="div(); getResult();"/>-->
+            
+        
+    </body>
+
+    <script
+    charset="utf8"
+    src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+    type="application/javascript"
+></script>
+<script>
+    window.ethereum.enable();
+    var provider = new ethers.providers.Web3Provider(web3.currentProvider, "rinkeby");
+    var CalculatorContractAddress ="0x9aD798E57e40a65BdD9990444c0877AE91e074aE";
+    var CalculatorContractABI = [
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "a",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "b",
+				"type": "int256"
+			}
+		],
+		"name": "add",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "a",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "b",
+				"type": "int256"
+			}
+		],
+		"name": "div",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "a",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "b",
+				"type": "int256"
+			}
+		],
+		"name": "multi",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "a",
+				"type": "int256"
+			},
+			{
+				"internalType": "int256",
+				"name": "b",
+				"type": "int256"
+			}
+		],
+		"name": "sub",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getResult",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+    var CalculatorContract;
+    var signer;
+    
+    provider.listAccounts().then(function(accounts){
+        signer = provider.getSigner(accounts[0]);
+        CalculatorContract = new ethers.Contract(
+            CalculatorContractAddress,
+            CalculatorContractABI,
+            signer
+        );
+    });
+    async function add(){
+        let a = document.getElementById("a").value,
+        b= document.getElementById("b").value;
+        GetResults = CalculatorContract.add(a,b);
+        await GetResults;
+    }
+    async function sub(){
+        let a = document.getElementById("a").value,
+        b= document.getElementById("b").value;
+        GetResults = CalculatorContract.sub(a,b);
+        await GetResults;
+    }
+    async function multi(){
+        let a = document.getElementById("a").value,
+        b= document.getElementById("b").value;
+        GetResults = CalculatorContract.multi(a,b);
+        await GetResults;
+    }
+    async function div(){
+        let a = document.getElementById("a").value,
+        b= document.getElementById("b").value;
+        GetResults = CalculatorContract.div(a,b);
+        await GetResults;
+    }
+    async function getResult(){
+        GetResults = CalculatorContract.getResult()
+        var Ans = await GetResults;
+        document.getElementById("demo").onclick = function() {myFunction()};
+            function myFunction() {
+              document.getElementById("demo").innerHTML = Ans;
+            }
+        ;
+    }
+</script>
+</html>
